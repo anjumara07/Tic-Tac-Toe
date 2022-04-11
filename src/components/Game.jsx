@@ -10,7 +10,6 @@ export function Game() {
   const [isXChance , setIsXChance] = useState(false);
 
   const onSquareClick = (index) =>{
-
      let strings = Array.from(gameState);
      if(strings[index])
      return;
@@ -18,11 +17,9 @@ export function Game() {
      strings[index] = isXChance ? "X" : "O" ;
      setGameState(strings);
      setIsXChance(!isXChance);
-     
   }
 
   useEffect(() =>{
-
      const winner = checkWinner();
 
      if(winner){
