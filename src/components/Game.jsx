@@ -8,6 +8,7 @@ export function Game() {
 
   const [gameState , setGameState] = useState(initialState);
   const [isXChance , setIsXChance] = useState(false);
+  const [count , setCount] = useState(0)
 
   const onSquareClick = (index) =>{
      let strings = Array.from(gameState);
@@ -21,10 +22,18 @@ export function Game() {
 
   useEffect(() =>{
      const winner = checkWinner();
+     setCount(count+1);
 
      if(winner){
        alert(`yay! ${winner} is Winner 🥇 🏆`)
        setGameState(initialState);
+       setCount(0);
+     }
+
+     else if(count===9){
+       alert(`It's Tie 😐`)
+       setGameState(initialState);
+       setCount(0);
      }
      
   },[gameState])
@@ -49,9 +58,15 @@ export function Game() {
     return null;
   }
 
+  const handleStates =()=>{
+    setGameState(initialState)
+    setCount(0);
+  }
+
   return (
     <div className="main-box">
       <h1 className="heading">Tic Tac Toe</h1>
+      <h2>It's Your Turn : <span style={{color: isXChance?"black":"red"}} >{isXChance?"X":"O"}</span></h2>
       <div style={{justifyContent:'center', display:'flex'}}>
         <SquareComponent className="box1" state={gameState[0]} onClick={()=>onSquareClick(0)} />
         <SquareComponent className="box1" state={gameState[1]} onClick={()=>onSquareClick(1)} />
@@ -68,7 +83,7 @@ export function Game() {
         <SquareComponent state={gameState[8]} onClick={()=>onSquareClick(8)} />
       </div>
 
-      <button className="btn"style={{marginTop:'20px'}} onClick={()=>setGameState(initialState)} >Reset Game</button>
+      <button className="btn"style={{marginTop:'20px'}} onClick={handleStates} >Reset Game</button>
       <p className="made">Made by Anjum 😍</p>
     </div>
   );
